@@ -5,3 +5,13 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Rails.logger.info '=== CREATING TEACHERS ==='
+
+10.times do
+  Teacher.create(
+    name: Faker::Name.first_name,
+    lastname: Faker::Name.last_name,
+    email: Faker::Internet.unique.email
+  )
+end
