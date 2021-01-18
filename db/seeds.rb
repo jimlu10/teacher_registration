@@ -7,11 +7,17 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Rails.logger.info '=== CREATING TEACHERS ==='
+teachers = []
 
 10.times do
-  Teacher.create(
+  teachers << Teacher.create(
     name: Faker::Name.first_name,
     lastname: Faker::Name.last_name,
     email: Faker::Internet.unique.email
   )
+end
+
+Rails.logger.info '=== CREATING COURSES ==='
+5.times do
+  Course.create(name: Faker::Job.unique.title)
 end

@@ -1,5 +1,6 @@
 class TeacherBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :email, :lastname, :name
+  fields :name
+  association :teacher, blueprint: TeacherBlueprint, default: {}
 end

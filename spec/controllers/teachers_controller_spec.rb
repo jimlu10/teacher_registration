@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TeachersController, type: :controller do
-  describe "GET Index" do
+  describe 'GET Index' do
     it 'Returns a 200' do
       teacher = create(:teacher)
 
@@ -21,7 +21,7 @@ RSpec.describe TeachersController, type: :controller do
     end
   end
 
-  describe "CREATE User" do
+  describe 'CREATE User' do
     let :create_teacher_params do
       {
         teacher: {
@@ -31,6 +31,7 @@ RSpec.describe TeachersController, type: :controller do
         }
       }
     end
+
     context 'When successful' do
       it 'Creates a teacher' do
         post :create, params: create_teacher_params
