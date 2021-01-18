@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Teacher, type: :model do
   describe 'validations' do
-    it { should validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:name) }
 
-    it { should validate_presence_of(:lastname) }
+    it { is_expected.to validate_presence_of(:lastname) }
 
-    it { should validate_presence_of(:email) }
+    it { is_expected.to validate_presence_of(:email) }
 
     it do
       create(:teacher)
