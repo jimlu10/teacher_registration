@@ -7,7 +7,7 @@ class ClassroomBlueprint < Blueprinter::Base
   end
 
   view :registration do
-    field :course_name do |classroom, options|
+    field :course_name do |classroom, _|
       classroom.course.name
     end
   end

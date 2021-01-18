@@ -19,6 +19,19 @@ class ClassroomsController < ApplicationController
     end
   end
 
+  def assign
+    @classroom = Classroom.find_by(id: assign_params[:classroom_id])
+    registration = @classroom.teacher_registrations.find_by(id: assign_params[:registration_id])
+    @classroom.assign_attributes(teacher: registration.teacher)
+
+    if @classroom.valid?
+      @classroom.save
+      render json: ClassroomBlueprint.render(@classroom, view: :normal), status: :created
+    else
+      render json: { errors: @classroom.errors.messages }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def classroom_params
@@ -27,5 +40,9 @@ class ClassroomsController < ApplicationController
 
   def registration_params
     params.permit(:classroom_id, :teacher_id)
+  end
+
+  def assign_params
+    params.permit(:classroom_id, :registration_id)
   end
 end
