@@ -1,6 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe CoursesController, type: :controller do
+  describe 'GET Index' do
+    it 'Returns a 200' do
+      course = create(:course)
+
+      get :index
+
+      expect(response).to have_http_status :ok
+      expect(json_body).to include_json({
+        courses: [
+          {
+            id: course.id,
+            name: course.name
+          }
+        ]
+      })
+    end
+  end
+
   describe "POST Index" do
     let :create_course_params do
       {

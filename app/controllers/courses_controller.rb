@@ -1,4 +1,10 @@
 class CoursesController < ApplicationController
+  def index
+    @courses = CourseBlueprint.render(Course.all, root: :courses)
+
+    render json: @courses, status: :ok
+  end
+
   def create
     @course = Course.new(course_params)
 
