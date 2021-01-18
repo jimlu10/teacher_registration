@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  resources :teachers, only: [:index]
+  resources :teachers, only: [:index, :create]
 end
