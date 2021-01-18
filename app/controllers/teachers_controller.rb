@@ -15,6 +15,24 @@ class TeachersController < ApplicationController
     end
   end
 
+  def like
+    @teacher = Teacher.find_by(id: params[:id])
+    @teacher.with_lock do
+      @teacher.increment!(:votes, 1)
+    end
+
+    render json: TeacherBlueprint.render(@teacher), status: :ok
+  end
+
+  def dislike
+    @teacher = Teacher.find_by(id: params[:id])
+    @teacher.with_lock do
+      @teacher.decrement!(:votes, 1)
+    end
+
+    render json: TeacherBlueprint.render(@teacher), status: :ok
+  end
+
   private
 
   def teacher_params

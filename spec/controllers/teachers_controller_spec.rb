@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe TeachersController, type: :controller do
+  let(:teacher) { create(:teacher) }
+
   describe 'GET Index' do
     it 'Returns a 200' do
-      teacher = create(:teacher)
+      teacher
 
       get :index
 
@@ -14,14 +16,15 @@ RSpec.describe TeachersController, type: :controller do
             id: teacher.id,
             name: teacher.name,
             lastname: teacher.lastname,
-            email: teacher.email
+            email: teacher.email,
+            votes: 0
           }
         ]
       })
     end
   end
 
-  describe 'CREATE User' do
+  describe 'CREATE Teacher' do
     let :create_teacher_params do
       {
         teacher: {
@@ -77,7 +80,6 @@ RSpec.describe TeachersController, type: :controller do
 
       describe 'When duplicated email' do
         it 'returns email has already been taken' do
-          teacher = create(:teacher)
           create_teacher_params[:teacher][:email] = teacher.email
 
           post :create, params: create_teacher_params
@@ -86,6 +88,31 @@ RSpec.describe TeachersController, type: :controller do
           expect(json_body).to include_json(errors: { email: ['has already been taken'] })
         end
       end
+    end
+  end
+
+  describe 'PATCH like' do
+    it 'Increments the counter on 1' do
+      expect(teacher.votes).to eq(0)
+
+      patch :like, params: { id: teacher.id }
+      teacher.reload
+
+      expect(response).to have_http_status :ok
+      expect(json_body[:votes]).to eq(1)
+    end
+  end
+
+  describe 'PATCH dislike' do
+    it 'Decrements the counter on 1' do
+      teacher.update(votes: 1)
+      expect(teacher.votes).to eq(1)
+
+      patch :dislike, params: { id: teacher.id }
+      teacher.reload
+
+      expect(response).to have_http_status :ok
+      expect(json_body[:votes]).to eq(0)
     end
   end
 end
