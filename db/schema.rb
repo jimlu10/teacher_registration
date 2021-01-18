@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_18_125248) do
+ActiveRecord::Schema.define(version: 2021_01_18_133209) do
 
   create_table "classrooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "teacher_id"
     t.bigint "course_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "votes", default: 0, null: false
     t.index ["course_id"], name: "index_classrooms_on_course_id"
     t.index ["teacher_id"], name: "index_classrooms_on_teacher_id"
   end

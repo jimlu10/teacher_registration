@@ -25,7 +25,8 @@ RSpec.describe ClassroomsController, type: :controller do
             id: course.id,
             name: course.name
           },
-          teacher: {}
+          teacher: {},
+          votes: 0
         )
       end
     end
@@ -80,6 +81,31 @@ RSpec.describe ClassroomsController, type: :controller do
           }
         )
       end
+    end
+  end
+
+  describe 'PATCH like' do
+    it 'Increments the counter on 1' do
+      expect(classroom.votes).to eq(0)
+
+      patch :like, params: { classroom_id: classroom.id }
+      classroom.reload
+
+      expect(response).to have_http_status :ok
+      expect(json_body[:votes]).to eq(1)
+    end
+  end
+
+  describe 'PATCH dislike' do
+    it 'Decrements the counter on 1' do
+      classroom.update(votes: 1)
+      expect(classroom.votes).to eq(1)
+
+      patch :dislike, params: { classroom_id: classroom.id }
+      classroom.reload
+
+      expect(response).to have_http_status :ok
+      expect(json_body[:votes]).to eq(0)
     end
   end
 end

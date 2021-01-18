@@ -4,6 +4,7 @@ class ClassroomBlueprint < Blueprinter::Base
   view :normal do
     association :course, blueprint: CourseBlueprint
     association :teacher, blueprint: TeacherBlueprint, default: {}
+    fields :votes
   end
 
   view :registration do

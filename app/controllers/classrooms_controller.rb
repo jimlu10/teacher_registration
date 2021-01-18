@@ -32,6 +32,24 @@ class ClassroomsController < ApplicationController
     end
   end
 
+  def like
+    @classroom = Classroom.find_by(id: params[:classroom_id])
+    @classroom.with_lock do
+      @classroom.increment!(:votes, 1)
+    end
+
+    render json: ClassroomBlueprint.render(@classroom, view: :normal), status: :ok
+  end
+
+  def dislike
+    @classroom = Classroom.find_by(id: params[:classroom_id])
+    @classroom.with_lock do
+      @classroom.decrement!(:votes, 1)
+    end
+
+    render json: ClassroomBlueprint.render(@classroom, view: :normal), status: :ok
+  end
+
   private
 
   def classroom_params

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     member do
       post 'registration'
       patch 'assign'
+      patch 'like'
+      patch 'dislike'
     end
   end
 
